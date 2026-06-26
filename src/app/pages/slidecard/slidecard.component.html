@@ -1,0 +1,45 @@
+<section class="screen-page slidecard-page">
+  <app-top-banner />
+
+  @if (state(); as viewState) {
+    @if (viewState.loading) {
+      <section class="slidecard-page__status surface-card">
+        <p>Loading cards…</p>
+      </section>
+    } @else if (viewState.error; as err) {
+      <section class="slidecard-page__status slidecard-page__status--error surface-card">
+        <p>{{ err }}</p>
+      </section>
+    } @else {
+      @if (currentCard(); as card) {
+        <div class="surface-card slidecard-page__meta">
+          <span>GID {{ displayGameId() ?? '—' }}</span>
+          <span>CLID {{ displayCallListId() ?? '—' }}</span>
+          <span>Inning {{ displayInning() ?? '—' }}</span>
+          <span>CID {{ card.CardID }}</span>
+        </div>
+      }
+
+      <div class="slidecard-page__nav surface-card">
+        <button type="button" [disabled]="!canGoPrevious()" (click)="goPrevious()">Previous</button>
+        <span>Card {{ currentIndex() + 1 }} of {{ cards().length }}</span>
+        <button type="button" [disabled]="!canGoNext()" (click)="goNext()">Next</button>
+      </div>
+
+      <div class="slidecard-page__stage">
+        @if (currentCard(); as card) {
+          <app-bingo-card
+            [card]="card"
+            [callListId]="context()?.Call_List_ID ?? null"
+            [inning]="context()?.Inning ?? null"
+          />
+        } @else {
+          <section class="slidecard-page__status surface-card">
+            <p>No card returned.</p>
+          </section>
+        }
+      </div>
+    }
+  }
+</section>
+

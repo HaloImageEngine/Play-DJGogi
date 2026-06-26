@@ -1,0 +1,86 @@
+<section class="slidecardsw-page card-view-page">
+  <app-top-banner />
+  <header class="slidecardsw-page__header">
+    <div class="slidecardsw-page__intro">
+      <a class="card-view-page__back" routerLink="/cards">← My cards</a>
+
+      @if (isMultiCard()) {
+        <p class="slidecardsw-page__eyebrow">Game cards</p>
+        <h1>Browse game bingo cards</h1>
+        <p class="slidecardsw-page__copy">
+          Swipe through cards for this game. Called marks refresh every
+          {{ environment.cardRefreshIntervalSeconds }}s.
+        </p>
+      } @else {
+        <p class="slidecardsw-page__eyebrow">Single card</p>
+        <h1>Browse one bingo card</h1>
+        <p class="slidecardsw-page__copy">This page loads one printed card by Card ID.</p>
+      }
+
+    </div>
+
+    @if (!isMultiCard()) {
+      <div class="slidecardsw-page__settings surface-card">
+        <label class="slidecardsw-page__field" for="player-card-id">
+          <span>Card ID</span>
+          <input
+            id="player-card-id"
+            type="text"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            class="slidecardsw-page__input"
+            [ngModel]="cardIdInput() ?? ''"
+            (ngModelChange)="onCardIdInput($event)"
+            placeholder="Enter card id"
+            autocomplete="off"
+            enterkeyhint="go"
+            (keydown.enter)="loadEnteredCard()"
+          />
+        </label>
+        @if (context(); as ctx) {
+          <p class="slidecardsw-page__copy">
+            Game context: Game {{ ctx.Game_ID ?? '—' }}, Call list {{ ctx.Call_List_ID ?? '—' }}, Inning
+            {{ ctx.Inning ?? '—' }}.
+          </p>
+        }
+        <button type="button" class="card-view-page__load-btn" (click)="loadEnteredCard()">Load card</button>
+      </div>
+    }
+
+    <div class="slidecardsw-page__meta surface-card">
+      <span>CardID {{ displayCardId() ?? '—' }}</span>
+      <span>Call list ID {{ displayCallListId() ?? '—' }}</span>
+      <span>Inning {{ displayInning() ?? '—' }}</span>
+      <span>{{ cards().length }} cards loaded</span>
+      <span>{{ cardsDisplayedCount() }} card displayed</span>
+    </div>
+  </header>
+
+  @if (state(); as viewState) {
+    @if (viewState.loading) {
+      <section class="surface-card slidecardsw-status">
+        <p>Loading printed card for CardID {{ displayCardId() ?? '…' }}…</p>
+      </section>
+    } @else if (viewState.error; as err) {
+      <section class="surface-card slidecardsw-status slidecardsw-status--error">
+        <p>{{ err }}</p>
+      </section>
+    } @else if (currentCard(); as card) {
+      @if (isMultiCard() && cards().length > 1) {
+        <div class="card-view-page__nav">
+          <button type="button" [disabled]="!canGoPrevious()" (click)="goPrevious()">Previous</button>
+          <span>Card {{ currentIndex() + 1 }} of {{ cards().length }}</span>
+          <button type="button" [disabled]="!canGoNext()" (click)="goNext()">Next</button>
+        </div>
+      }
+
+      <div class="card-view-page__stage">
+        <app-bingo-card [card]="card" [callListId]="displayCallListId()" [inning]="displayInning()" />
+      </div>
+    } @else {
+      <section class="surface-card slidecardsw-status">
+        <p>No card was returned for CardID {{ displayCardId() ?? '—' }}.</p>
+      </section>
+    }
+  }
+</section>

@@ -1,0 +1,110 @@
+<section class="setup-page page-stack">
+  <app-top-banner />
+  <header class="setup-page__header">
+    <div>
+      <p class="setup-page__eyebrow">Game setup</p>
+      <p class="setup-page__copy">
+        Set Game ID, Call List ID, and Inning so we can load your cards and called songs.
+      </p>
+    </div>
+  </header>
+
+  @if (loading()) {
+    <div class="surface-card setup-page__status">Loading your games…</div>
+  } @else {
+    @if (latestGames().length > 0) {
+      <section class="surface-card setup-page__section">
+        <h2>Recent games</h2>
+        <ul class="setup-page__game-list">
+          @for (game of latestGames(); track game.Game_ID) {
+            <li>
+              <button type="button" class="setup-page__game-pick" (click)="applyLatestGame(game)">
+                <strong>{{ game.Game_Name }}</strong>
+                <span>Game {{ game.Game_ID }} · Call list {{ game.Call_List_ID }} · Inning {{ game.Game_Inning }}</span>
+              </button>
+            </li>
+          }
+        </ul>
+      </section>
+    }
+
+    <form class="surface-card setup-page__form" (ngSubmit)="saveAndContinue()">
+      <h2>Game context</h2>
+
+      <div class="setup-page__inputs">
+        <div class="setup-page__inputs-row setup-page__inputs-row--context">
+          <label class="setup-field">
+            <span>Game ID</span>
+            <input
+              type="text"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              name="gameId"
+              [ngModel]="gameId > 0 ? gameId : ''"
+              (ngModelChange)="onGameIdInput($event)"
+              autocomplete="off"
+              enterkeyhint="next"
+              required
+            />
+          </label>
+
+          <label class="setup-field">
+            <span>Call List ID</span>
+            <input
+              type="text"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              name="callListId"
+              [ngModel]="callListId > 0 ? callListId : ''"
+              (ngModelChange)="onCallListIdInput($event)"
+              list="call-list-ids"
+              autocomplete="off"
+              enterkeyhint="next"
+              required
+            />
+            <datalist id="call-list-ids">
+              @for (id of callListIds(); track id) {
+                <option [value]="id"></option>
+              }
+            </datalist>
+          </label>
+
+          <label class="setup-field">
+            <span>Inning</span>
+            <input
+              type="text"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              name="inning"
+              [ngModel]="inning > 0 ? inning : ''"
+              (ngModelChange)="onInningInput($event)"
+              autocomplete="off"
+              enterkeyhint="next"
+              required
+            />
+          </label>
+        </div>
+
+        <label class="setup-field setup-field--card-id">
+          <span>Card ID</span>
+          <input
+            type="text"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            name="cardId"
+            [ngModel]="cardId > 0 ? cardId : ''"
+            (ngModelChange)="onCardIdInput($event)"
+            autocomplete="off"
+            enterkeyhint="go"
+          />
+        </label>
+      </div>
+
+      @if (error(); as err) {
+        <p class="setup-page__error" role="alert">{{ err }}</p>
+      }
+
+      <button type="submit" class="setup-page__submit">Continue to my cards</button>
+    </form>
+  }
+</section>

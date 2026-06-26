@@ -1,0 +1,70 @@
+<section class="my-cards-page page-stack">
+  <app-top-banner />
+  <header class="my-cards-page__header">
+    <div>
+      @if (contextLabel()) {
+        <p class="my-cards-page__context">{{ contextLabel() }}</p>
+      }
+    </div>
+    <div class="my-cards-page__actions">
+      <button type="button" class="my-cards-page__btn my-cards-page__btn--ghost" (click)="changeGame()">
+        Change game
+      </button>
+    </div>
+  </header>
+
+  <section class="surface-card my-cards-page__manual">
+    <h2>Open by card number</h2>
+    <div class="my-cards-page__manual-row">
+      <label class="my-cards-page__manual-field" for="my-cards-card-id-input">
+        <span class="my-cards-page__field-label">Card ID</span>
+        <input
+          id="my-cards-card-id-input"
+          class="my-cards-page__card-id-input"
+          type="text"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          maxlength="10"
+          size="10"
+          [ngModel]="manualCardId() ?? ''"
+          (ngModelChange)="onManualCardIdInput($event)"
+          autocomplete="off"
+          enterkeyhint="go"
+          (keydown.enter)="openManualCard()"
+        />
+      </label>
+      <button type="button" class="my-cards-page__btn my-cards-page__btn--inline" (click)="openManualCard()">
+        Open card
+      </button>
+    </div>
+    <button type="button" class="my-cards-page__btn my-cards-page__btn--secondary" (click)="viewAllPrintedCards()">
+      View all cards for this game (live called marks)
+    </button>
+  </section>
+
+  @if (loading()) {
+    <div class="surface-card my-cards-page__status">Loading cards…</div>
+  } @else if (error(); as err) {
+    <div class="surface-card my-cards-page__status my-cards-page__status--error">{{ err }}</div>
+  } @else if (cards().length === 0) {
+    <div class="surface-card my-cards-page__status">
+      No cards found for this game, call list, and inning. Try another card number above.
+    </div>
+  } @else {
+    <ul class="my-cards-page__list">
+      @for (card of cards(); track card.Card_ID) {
+        <li>
+          <button type="button" class="my-cards-page__card-row" (click)="openCard(card.Card_ID)">
+            <span class="my-cards-page__card-id">Card {{ card.Card_ID }}</span>
+            @if (card.Card_PlayerName) {
+              <span>{{ card.Card_PlayerName }}</span>
+            }
+            @if (card.Card_IsWinner) {
+              <span class="my-cards-page__winner">Winner</span>
+            }
+          </button>
+        </li>
+      }
+    </ul>
+  }
+</section>

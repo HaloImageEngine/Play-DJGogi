@@ -1,0 +1,209 @@
+<section class="login-page">
+  <app-top-banner />
+  <div class="login-card surface-card">
+    <header class="login-card__header">
+      <p class="login-card__eyebrow">Music Bingo Player</p>
+      <h1>{{ mode() === 'sign-in' ? 'Sign in' : 'Create account' }}</h1>
+      <p class="login-card__copy">
+        @if (mode() === 'sign-in') {
+          Sign in to view your bingo cards and track called songs.
+        } @else {
+          Register a new player account. You will receive a User ID to use with your cards.
+        }
+      </p>
+    </header>
+
+    <div class="login-mode" role="tablist" aria-label="Sign in or create account">
+      <button
+        type="button"
+        class="login-mode__tab"
+        role="tab"
+        [attr.aria-selected]="mode() === 'sign-in'"
+        [class.is-active]="mode() === 'sign-in'"
+        (click)="setMode('sign-in')"
+      >
+        Sign in
+      </button>
+      <button
+        type="button"
+        class="login-mode__tab"
+        role="tab"
+        [attr.aria-selected]="mode() === 'create'"
+        [class.is-active]="mode() === 'create'"
+        (click)="setMode('create')"
+      >
+        Create account
+      </button>
+    </div>
+
+    <form class="login-form" (ngSubmit)="onSubmit()">
+      <label class="login-field" for="login">
+        <span>Login alias</span>
+        <input
+          #loginAliasInput
+          id="login"
+          type="text"
+          inputmode="text"
+          autocapitalize="none"
+          autocorrect="off"
+          spellcheck="false"
+          [(ngModel)]="login"
+          name="login"
+          autocomplete="username"
+          minlength="6"
+          maxlength="20"
+          enterkeyhint="next"
+          required
+        />
+        <small>6–20 characters (this is your player login name)</small>
+      </label>
+
+      @if (mode() === 'create') {
+        <div class="login-form__row login-form__row--names">
+          <label class="login-field" for="firstName">
+            <span>First name</span>
+            <input
+              id="firstName"
+              type="text"
+              inputmode="text"
+              autocapitalize="words"
+              [(ngModel)]="firstName"
+              name="firstName"
+              autocomplete="given-name"
+              enterkeyhint="next"
+              required
+            />
+          </label>
+
+          <label class="login-field login-field--mi" for="middleInitial">
+            <span>MI</span>
+            <input
+              id="middleInitial"
+              type="text"
+              inputmode="text"
+              autocapitalize="characters"
+              maxlength="1"
+              [(ngModel)]="middleInitial"
+              name="middleInitial"
+              autocomplete="additional-name"
+              enterkeyhint="next"
+            />
+          </label>
+
+          <label class="login-field" for="lastName">
+            <span>Last name</span>
+            <input
+              id="lastName"
+              type="text"
+              inputmode="text"
+              autocapitalize="words"
+              [(ngModel)]="lastName"
+              name="lastName"
+              autocomplete="family-name"
+              enterkeyhint="next"
+              required
+            />
+          </label>
+        </div>
+
+        <label class="login-field" for="email">
+          <span>Email</span>
+          <input
+            id="email"
+            type="email"
+            inputmode="email"
+            autocapitalize="none"
+            [(ngModel)]="email"
+            name="email"
+            autocomplete="email"
+            enterkeyhint="next"
+            required
+          />
+        </label>
+
+        <div class="login-form__row">
+          <label class="login-field" for="zip">
+            <span>ZIP code</span>
+            <input
+              id="zip"
+              type="text"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              maxlength="10"
+              [(ngModel)]="zip"
+              name="zip"
+              autocomplete="postal-code"
+              enterkeyhint="next"
+              required
+            />
+          </label>
+
+          <label class="login-field" for="phoneNum">
+            <span>Phone</span>
+            <input
+              id="phoneNum"
+              type="tel"
+              inputmode="tel"
+              maxlength="12"
+              placeholder="555-555-5555"
+              [ngModel]="phoneNum"
+              (ngModelChange)="onPhoneNumInput($event)"
+              name="phoneNum"
+              autocomplete="tel"
+              enterkeyhint="next"
+              required
+            />
+          </label>
+        </div>
+      }
+
+      <label class="login-field" for="password">
+        <span>Password</span>
+        <input
+          id="password"
+          type="password"
+          inputmode="text"
+          [(ngModel)]="password"
+          name="password"
+          [attr.autocomplete]="mode() === 'create' ? 'new-password' : 'current-password'"
+          [attr.enterkeyhint]="mode() === 'create' ? 'next' : 'go'"
+          required
+        />
+      </label>
+
+      @if (mode() === 'create') {
+        <label class="login-field" for="confirmPassword">
+          <span>Confirm password</span>
+          <input
+            id="confirmPassword"
+            type="password"
+            inputmode="text"
+            [(ngModel)]="confirmPassword"
+            name="confirmPassword"
+            autocomplete="new-password"
+            enterkeyhint="go"
+            required
+          />
+        </label>
+      }
+
+      @if (error) {
+        <p class="login-form__error" role="alert">{{ error }}</p>
+      }
+
+      @if (success) {
+        <p class="login-form__success" role="status">{{ success }}</p>
+      }
+
+      <button type="submit" class="login-form__submit" [disabled]="submitting">
+        @if (submitting) {
+          {{ mode() === 'create' ? 'Creating account…' : 'Signing in…' }}
+        } @else {
+          {{ mode() === 'create' ? 'Create account' : 'Login' }}
+        }
+      </button>
+    </form>
+  </div>
+
+  <p class="login-page__build">Build {{ appVersion }}</p>
+</section>

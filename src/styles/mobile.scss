@@ -1,0 +1,65 @@
+/* Mobile-first layout and touch targets (Player app is phone-only). */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  /* Fallback for older iOS browsers that do not fully support dvh. */
+  min-height: 100vh;
+  min-height: 100dvh;
+  overscroll-behavior-y: contain;
+}
+
+button,
+[role='button'],
+a.button {
+  min-height: 2.75rem;
+  touch-action: manipulation;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  max-width: 100%;
+  min-height: 2.75rem;
+  font-size: 16px; /* prevents iOS zoom on focus */
+  line-height: 1.25;
+  border-radius: 0.55rem;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type='number'] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+button,
+[role='button'],
+a.button,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.surface-card {
+  padding: 1rem 1.1rem;
+  border-radius: 1rem;
+}
+
+.page-stack {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  max-width: 100%;
+}

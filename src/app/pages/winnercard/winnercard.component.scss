@@ -1,0 +1,38 @@
+.winnercard-page {
+  width: 100%;
+  display: grid;
+  gap: 1rem;
+}
+
+.winnercard-page__stage {
+  width: 100%;
+  display: grid;
+  justify-items: center;
+}
+
+.winnercard-page__meta {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.85rem;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.6rem 0.8rem;
+  border-radius: 1rem;
+}
+
+.winnercard-page__meta span {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.winnercard-page__status {
+  width: 100%;
+  text-align: center;
+}
+
+.winnercard-page__status--error p {
+  color: var(--danger);
+}
+

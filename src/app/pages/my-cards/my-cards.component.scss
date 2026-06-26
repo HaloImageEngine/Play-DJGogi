@@ -1,0 +1,150 @@
+.my-cards-page {
+  width: 100%;
+}
+
+.my-cards-page__header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.my-cards-page__eyebrow {
+  margin: 0 0 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-teal);
+}
+
+.my-cards-page__context {
+  margin: 0.5rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.my-cards-page__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.my-cards-page__btn {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  border: 0;
+  background: linear-gradient(135deg, #1dd3b0, #7fe7d4);
+  color: #07111f;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.my-cards-page__btn--ghost {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
+}
+
+.my-cards-page__btn--secondary {
+  margin-top: 0.75rem;
+  background: rgba(124, 124, 255, 0.2);
+  border: 1px solid rgba(124, 124, 255, 0.45);
+  color: var(--text-primary);
+}
+
+.my-cards-page__manual h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.my-cards-page__manual-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.my-cards-page__manual-field {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+}
+
+.my-cards-page__field-label {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.my-cards-page__manual-row input {
+  padding: 0.6rem 0.85rem;
+  border-radius: 0.55rem;
+  border: 1px solid var(--border-strong);
+  background: rgba(15, 23, 42, 0.85);
+}
+
+.my-cards-page__card-id-input {
+  width: 10ch;
+  max-width: 10ch;
+  font-variant-numeric: tabular-nums;
+}
+
+.my-cards-page__btn--inline {
+  width: auto;
+  flex: 0 0 auto;
+}
+
+.my-cards-page__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.my-cards-page__card-row {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border-soft);
+  background: var(--panel-elevated);
+  cursor: pointer;
+  text-align: left;
+}
+
+.my-cards-page__card-row:hover {
+  border-color: var(--accent-teal);
+}
+
+.my-cards-page__card-id {
+  font-weight: 700;
+}
+
+.my-cards-page__winner {
+  margin-left: auto;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent-amber);
+}
+
+.my-cards-page__status {
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.my-cards-page__status--error {
+  color: var(--danger);
+}

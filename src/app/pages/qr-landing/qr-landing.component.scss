@@ -1,0 +1,36 @@
+.qr-landing-page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.qr-landing-page__card {
+  width: 100%;
+  max-width: 22rem;
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.qr-landing-page__eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-teal);
+}
+
+.qr-landing-page__status {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.qr-landing-page__error {
+  margin: 0 0 0.75rem;
+  color: var(--danger);
+}
+
+.qr-landing-page__link {
+  color: var(--accent-iris);
+}

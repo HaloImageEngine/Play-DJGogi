@@ -1,0 +1,11 @@
+<section class="qr-landing-page">
+  <div class="qr-landing-page__card surface-card">
+    <p class="qr-landing-page__eyebrow">DJ Gogi Music Bingo</p>
+    @if (error(); as err) {
+      <p class="qr-landing-page__error" role="alert">{{ err }}</p>
+      <a class="qr-landing-page__link" routerLink="/login">Go to login</a>
+    } @else {
+      <p class="qr-landing-page__status" role="status">{{ status() }}</p>
+    }
+  </div>
+</section>

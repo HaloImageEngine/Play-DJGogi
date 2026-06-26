@@ -1,0 +1,65 @@
+<article class="slidecardsw-card surface-card slidecardone-card">
+  <header class="slidecardsw-card__header slidecardsw-sponsor-container">
+    <div class="slidecardsw-card__meta slidecardsw-card__meta--screen">
+      <p class="slidecardsw-card__id-row">
+        <span class="slidecardsw-card__id-pair">
+          <span class="slidecardsw-card__id-label">GID</span>
+          <span class="slidecardsw-card__id-value">{{ card().GameID }}</span>
+        </span>
+        <span class="slidecardsw-card__id-pair">
+          <span class="slidecardsw-card__id-label">CLID</span>
+          <span class="slidecardsw-card__id-value">{{ displayCallListId() ?? '—' }}</span>
+        </span>
+        <span class="slidecardsw-card__id-pair">
+          <span class="slidecardsw-card__id-label">Inning</span>
+          <span class="slidecardsw-card__id-value">{{ displayInning() ?? '—' }}</span>
+        </span>
+        <span class="slidecardsw-card__id-pair">
+          <span class="slidecardsw-card__id-label">CID</span>
+          <span class="slidecardsw-card__id-value">{{ card().CardID }}</span>
+        </span>
+      </p>
+    </div>
+    <div class="slidecardsw-sponsor-area" aria-label="Card id display">
+      <div class="slidecardsw-sponsor-banner">
+        <span class="slidecardsw-sponsor-banner__label">Card ID {{ card().CardID }}</span>
+        <span class="slidecardsw-sponsor-banner__gci">
+          Call list ID {{ displayCallListId() ?? '—' }} · Inning {{ displayInning() ?? '—' }}
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <div class="slidecardsw-card__grid" aria-label="Bingo card squares">
+    @for (square of card().Squares; track square.SquarePosition) {
+      <article
+        class="slidecardsw-square"
+        [class.is-called]="isSquareLit(square)"
+        [class.is-unverified]="isSquareUnverified(square.SquarePosition)"
+        [class.is-free]="square.IsFreeSpace"
+        [class.slidecardsw-square--interactive]="interactive()"
+        [attr.role]="interactive() ? 'button' : null"
+        [attr.tabindex]="interactive() ? 0 : null"
+        (click)="onSquareTap(square.SquarePosition)"
+        (keydown.enter)="onSquareTap(square.SquarePosition)"
+        (keydown.space)="$event.preventDefault(); onSquareTap(square.SquarePosition)"
+      >
+        <div class="slidecardsw-square__topline">
+          <span>{{ square.SquareCode }}</span>
+          <span>{{ square.SquarePosition }}</span>
+        </div>
+        @if (square.Song) {
+          <div class="slidecardsw-square__content">
+            <p class="slidecardsw-square__title">{{ square.Song.SongName }}</p>
+            <p class="slidecardsw-square__artist">{{ square.Song.SongArtist }}</p>
+          </div>
+        } @else {
+          <div class="slidecardsw-square__content slidecardsw-square__content--free">
+            <p class="slidecardsw-square__title">DJ GOGI</p>
+            <p class="slidecardsw-square__artist">Freebie</p>
+          </div>
+        }
+      </article>
+    }
+  </div>
+</article>

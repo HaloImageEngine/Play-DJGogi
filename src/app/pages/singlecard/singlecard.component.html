@@ -1,0 +1,74 @@
+<section class="screen-page singlecard-page">
+  <app-top-banner />
+
+  <div class="singlecard-page__picker surface-card">
+    <label class="singlecard-page__field singlecard-page__field--inline" for="singlecard-id-input">
+      <span class="singlecard-page__field-label">Card ID</span>
+      <input
+        id="singlecard-id-input"
+        class="singlecard-page__card-id-input"
+        type="text"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        maxlength="10"
+        size="10"
+        [ngModel]="cardIdInput() ?? ''"
+        (ngModelChange)="onCardIdInput($event)"
+        autocomplete="off"
+        enterkeyhint="go"
+        (keydown.enter)="loadEnteredCard()"
+      />
+    </label>
+    <button type="button" class="singlecard-page__load-btn" (click)="loadEnteredCard()">Load card</button>
+  </div>
+
+  @if (state().loading) {
+    <section class="singlecard-page__status surface-card">
+      <p>Loading card…</p>
+    </section>
+  } @else if (state().error; as err) {
+    <section class="singlecard-page__status singlecard-page__status--error surface-card">
+      <p>{{ err }}</p>
+    </section>
+  } @else if (currentCard(); as card) {
+    <div class="surface-card singlecard-page__meta">
+      <span>GID {{ displayGameId() ?? '—' }}</span>
+      <span>CLID {{ displayCallListId() ?? '—' }}</span>
+      <span>Inning {{ displayInning() ?? '—' }}</span>
+      <span>CID {{ card.CardID }}</span>
+    </div>
+
+    <div class="singlecard-page__stage">
+      <app-bingo-card
+        [card]="card"
+        [callListId]="displayCallListId()"
+        [inning]="displayInning()"
+        [interactive]="true"
+        [verifyCalledOnTap]="true"
+        [markedPositions]="markedPositions()"
+        [unverifiedPositions]="unverifiedPositions()"
+        (squareTap)="onSquareTap($event)"
+      />
+    </div>
+  } @else {
+    <section class="singlecard-page__status surface-card">
+      <p>No card was returned.</p>
+    </section>
+  }
+</section>
+
+@if (squareCheckMessage(); as message) {
+  <div class="singlecard-page__popup-backdrop" (click)="dismissSquareCheckMessage()">
+    <div
+      class="singlecard-page__popup surface-card"
+      role="alertdialog"
+      aria-modal="true"
+      aria-labelledby="singlecard-check-message"
+      (click)="$event.stopPropagation()"
+    >
+      <p id="singlecard-check-message">{{ message }}</p>
+      <button type="button" class="singlecard-page__popup-btn" (click)="dismissSquareCheckMessage()">OK</button>
+    </div>
+  </div>
+}
+

@@ -1,0 +1,31 @@
+<div class="top-banner" role="banner" aria-label="DJ Gogi Music Bingo">
+  <div class="top-banner__title">DJ Gogi Music Bingo</div>
+  <div class="top-banner__right">
+    <div class="top-banner__user">
+      <span class="top-banner__user-item">UID: {{ user()?.UserId ?? '—' }}</span>
+      <span class="top-banner__user-item">UA: {{ user()?.UserAlias ?? '—' }}</span>
+    </div>
+    <button type="button" class="top-banner__auth-btn" (click)="onAuthAction()">
+      {{ isLoggedIn() ? 'Logoff' : 'Login' }}
+    </button>
+  </div>
+</div>
+
+<nav class="top-nav" aria-label="Primary navigation">
+  <a class="top-nav__button" routerLink="/setup" routerLinkActive="is-active">Game Setup</a>
+  <a class="top-nav__button" routerLink="/singlecard" routerLinkActive="is-active">Single Card</a>
+  <a class="top-nav__button" routerLink="/slidecardbypid" routerLinkActive="is-active">
+    PID Cards
+  </a>
+  <a class="top-nav__button" routerLink="/cards" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">
+    Cards
+  </a>
+  <a
+    class="top-nav__button"
+    routerLink="/winnercard"
+    routerLinkActive="is-active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    Winner Card
+  </a>
+</nav>

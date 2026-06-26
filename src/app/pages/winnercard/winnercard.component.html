@@ -1,0 +1,35 @@
+<section class="winnercard-page">
+  <app-top-banner />
+
+  @if (state(); as viewState) {
+    @if (viewState.loading) {
+      <section class="winnercard-page__status surface-card">
+        <p>Loading winner card…</p>
+      </section>
+    } @else if (viewState.error; as err) {
+      <section class="winnercard-page__status winnercard-page__status--error surface-card">
+        <p>{{ err }}</p>
+      </section>
+    } @else if (winnerCard(); as card) {
+      <div class="surface-card winnercard-page__meta">
+        <span>GID {{ displayGameId() ?? '—' }}</span>
+        <span>CLID {{ displayCallListId() ?? '—' }}</span>
+        <span>Inning {{ displayInning() ?? '—' }}</span>
+        <span>CID {{ card.CardID }}</span>
+      </div>
+
+      <section class="winnercard-page__stage">
+        <app-bingo-card
+          [card]="card"
+          [callListId]="context()?.Call_List_ID ?? null"
+          [inning]="context()?.Inning ?? null"
+        />
+      </section>
+    } @else {
+      <section class="winnercard-page__status surface-card">
+        <p>No winner card found yet for this game.</p>
+      </section>
+    }
+  }
+</section>
+
