@@ -11,21 +11,26 @@
   </div>
 </div>
 
-<nav class="top-nav" aria-label="Primary navigation">
-  <a class="top-nav__button" routerLink="/setup" routerLinkActive="is-active">Game Setup</a>
-  <a class="top-nav__button" routerLink="/singlecard" routerLinkActive="is-active">Single Card</a>
-  <a class="top-nav__button" routerLink="/slidecardbypid" routerLinkActive="is-active">
-    PID Cards
-  </a>
-  <a class="top-nav__button" routerLink="/cards" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">
-    Cards
-  </a>
-  <a
-    class="top-nav__button"
-    routerLink="/winnercard"
-    routerLinkActive="is-active"
-    [routerLinkActiveOptions]="{ exact: true }"
-  >
-    Winner Card
-  </a>
-</nav>
+@if (showTopNav()) {
+  <nav class="top-nav" aria-label="Primary navigation">
+    <a class="top-nav__button" routerLink="/setup" routerLinkActive="is-active">Game Setup</a>
+    <a class="top-nav__button" routerLink="/singlecard" routerLinkActive="is-active">Single Card</a>
+    <a class="top-nav__button" routerLink="/slidecardbypid" routerLinkActive="is-active">
+      PID Cards
+    </a>
+    <a class="top-nav__button" routerLink="/slidecardbypidx5" routerLinkActive="is-active">
+      PIDTX5
+    </a>
+    <a class="top-nav__button" routerLink="/cards" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">
+      Cards
+    </a>
+    <a
+      class="top-nav__button"
+      routerLink="/winnercard"
+      routerLinkActive="is-active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      Winner Card
+    </a>
+  </nav>
+}

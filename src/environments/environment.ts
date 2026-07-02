@@ -4,7 +4,7 @@ const apiBaseUrl = '/gogi-api/api/';
 export const environment = {
   production: false,
   debugLogging: true,
-  version: '26.06.01.01.T',
+  version: '26.07.01.01.T',
   cardRefreshIntervalSeconds: 15,
   apiBaseUrl,
   rapidCmsVerifyAliasApiUrl: `${apiBaseUrl}RapidCMS/login/verify-alias`,
@@ -16,5 +16,6 @@ export const environment = {
   bingoExistingCardsByPidApiUrl: `${apiBaseUrl}Bingo/CallList/Get_Existing_Cards_ByPID`,
   bingoCheckCalledNumberApiUrl: `${apiBaseUrl}Bingo/CallList/Check_Called_Number`,
   bingoLatestGamesByUserApiUrl: `${apiBaseUrl}Bingo/Game/Get_Latest_Games_by_UserID`,
-  bingoMaxGameIdApiUrl: `${apiBaseUrl}Bingo/CallList/Get_Max_Game_ID`
+  bingoMaxGameIdApiUrl: `${apiBaseUrl}Bingo/CallList/Get_Max_Game_ID`,
+  packetIdDetailsByPidtx5ApiUrl: `${apiBaseUrl}Packet/Get_PacketID_Details_By_PIDTX5`
 };

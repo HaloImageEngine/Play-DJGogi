@@ -19,6 +19,11 @@ export class TopBannerComponent {
 
   readonly user = computed(() => this.authUserService.user());
   readonly isLoggedIn = computed(() => this.user() !== null);
+  readonly isGuest100User = computed(() => {
+    const alias = this.user()?.UserAlias?.trim().toLowerCase() ?? '';
+    return alias === 'guest100';
+  });
+  readonly showTopNav = computed(() => !this.isGuest100User());
 
   onAuthAction(): void {
     if (this.isLoggedIn()) {

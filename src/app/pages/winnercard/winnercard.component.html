@@ -12,9 +12,9 @@
       </section>
     } @else if (winnerCard(); as card) {
       <div class="surface-card winnercard-page__meta">
-        <span>GID {{ displayGameId() ?? '—' }}</span>
-        <span>CLID {{ displayCallListId() ?? '—' }}</span>
-        <span>Inning {{ displayInning() ?? '—' }}</span>
+        <span>GID {{ metaDisplay(displayGameId()) }}</span>
+        <span>CLID {{ metaDisplay(displayCallListId()) }}</span>
+        <span>Inning {{ metaDisplay(displayInning()) }}</span>
         <span>CID {{ card.CardID }}</span>
       </div>
 

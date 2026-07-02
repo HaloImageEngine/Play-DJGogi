@@ -47,6 +47,18 @@ export const routes: Routes = [
     canActivate: [slidecardByPidAuthGuard]
   },
   {
+    path: 'slidecardbypidx5',
+    loadComponent: () =>
+      import('./pages/slidecardbypidx5/slidecardbypidx5.component').then(m => m.SlidecardByPidX5Component),
+    canActivate: [slidecardByPidAuthGuard]
+  },
+  {
+    path: 'slidecardbypidx5/:pidtx5',
+    loadComponent: () =>
+      import('./pages/slidecardbypidx5/slidecardbypidx5.component').then(m => m.SlidecardByPidX5Component),
+    canActivate: [slidecardByPidAuthGuard]
+  },
+  {
     path: 'winnercard',
     loadComponent: () => import('./pages/winnercard/winnercard.component').then(m => m.WinnercardComponent),
     canActivate: [AuthGuard]

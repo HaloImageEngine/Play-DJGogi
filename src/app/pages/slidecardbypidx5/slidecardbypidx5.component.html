@@ -1,0 +1,134 @@
+<section class="screen-page slidecardx5-page">
+  <app-top-banner />
+
+  <div class="slidecardx5-page__content">
+    <div class="slidecardx5-page__picker surface-card">
+      <div class="slidecardx5-page__picker-row">
+        <div class="slidecardx5-page__pid-group">
+          <label class="slidecardx5-page__field slidecardx5-page__field--pid" for="slidecardbypidx5-input">
+            <span class="slidecardx5-page__field-label">Packet ID : PIDTX5</span>
+            <input
+              id="slidecardbypidx5-input"
+              class="slidecardx5-page__pid-input"
+              type="text"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              maxlength="6"
+              size="6"
+              [ngModel]="pidtx5Input() ?? ''"
+              (ngModelChange)="onPidtx5Input($event)"
+              autocomplete="off"
+              enterkeyhint="go"
+              (keydown.enter)="loadEnteredPidtx5()"
+            />
+          </label>
+          <button type="button" class="slidecardx5-page__load-btn" (click)="loadEnteredPidtx5()">Load</button>
+        </div>
+
+        @if (routePidtx5(); as pidtx5) {
+          @if (state(); as viewState) {
+            @if (!viewState.loading && !viewState.error && viewState.cards.length > 0) {
+              <div class="slidecardx5-page__inning-section">
+                <span class="slidecardx5-page__field-label slidecardx5-page__field-label--inning">Inning</span>
+                <div class="slidecardx5-page__inning-box">
+                  <div class="slidecardx5-page__inning-buttons" role="group" aria-label="Select inning">
+                    @for (inning of availableInnings(); track inning) {
+                      <button
+                        type="button"
+                        class="slidecardx5-page__inning-btn"
+                        [class.is-active]="selectedInning() === inning"
+                        (click)="setInning(inning)"
+                      >
+                        {{ inning }}
+                      </button>
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <div class="slidecardx5-page__card-nav-section">
+                <span class="slidecardx5-page__nav-count">
+                  Card {{ currentIndex() + 1 }} of {{ inningCards().length }}
+                </span>
+                <div class="slidecardx5-page__card-nav-box">
+                  <button
+                    type="button"
+                    class="slidecardx5-page__nav-btn"
+                    [disabled]="!canGoPrevious()"
+                    (click)="goPrevious()"
+                  >
+                    Prev
+                  </button>
+                  <button
+                    type="button"
+                    class="slidecardx5-page__nav-btn"
+                    [disabled]="!canGoNext()"
+                    (click)="goNext()"
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            }
+          }
+        }
+      </div>
+    </div>
+
+    @if (routePidtx5(); as pidtx5) {
+      @if (state(); as viewState) {
+        @if (viewState.loading) {
+          <section class="slidecardx5-page__status surface-card">
+            <p>Loading X5 cards for packet {{ pidtx5 }}…</p>
+          </section>
+        } @else if (viewState.error; as err) {
+          <section class="slidecardx5-page__status slidecardx5-page__status--error surface-card">
+            <p>{{ err }}</p>
+          </section>
+        } @else {
+          <div class="slidecardx5-page__deck">
+            <div class="slidecardx5-page__viewport" aria-live="polite">
+              @if (inningCards().length > 0) {
+                <div class="slidecardx5-page__track" [style.transform]="trackTransform()">
+                  @for (card of inningCards(); track card.CardID) {
+                    <article class="slidecardx5-page__slide">
+                      <app-bingo-card
+                        [card]="card"
+                        [callListId]="displayCallListId()"
+                        [inning]="selectedInning()"
+                        [interactive]="true"
+                        [verifyCalledOnTap]="true"
+                        [markedPositions]="markedPositionsFor(card.CardID)"
+                        [unverifiedPositions]="unverifiedPositionsFor(card.CardID)"
+                        (squareTap)="onSquareTap($event, card)"
+                      />
+                    </article>
+                  }
+                </div>
+              } @else {
+                <section class="slidecardx5-page__status surface-card">
+                  <p>No cards for this inning.</p>
+                </section>
+              }
+            </div>
+          </div>
+        }
+      }
+    }
+  </div>
+</section>
+
+@if (squareCheckMessage(); as message) {
+  <div class="slidecardx5-page__popup-backdrop" (click)="dismissSquareCheckMessage()">
+    <div
+      class="slidecardx5-page__popup surface-card"
+      role="alertdialog"
+      aria-modal="true"
+      aria-labelledby="slidecardbypidx5-check-message"
+      (click)="$event.stopPropagation()"
+    >
+      <p id="slidecardbypidx5-check-message">{{ message }}</p>
+      <button type="button" class="slidecardx5-page__popup-btn" (click)="dismissSquareCheckMessage()">OK</button>
+    </div>
+  </div>
+}

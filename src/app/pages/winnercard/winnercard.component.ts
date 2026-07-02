@@ -10,6 +10,7 @@ import { BingoCardComponent } from '../../shared/bingo-card/bingo-card.component
 import { TopBannerComponent } from '../../shared/top-banner/top-banner.component';
 import { PlayerContextService } from '../../services/player-context.service';
 import { PrintedCardsService } from '../../services/printed-cards.service';
+import { metaDisplay } from '../../utils/meta-display';
 
 interface WinnercardState {
   cards: PrintedCard[];
@@ -30,6 +31,7 @@ export class WinnercardComponent {
   private readonly refreshIntervalMs = Math.max(environment.cardRefreshIntervalSeconds, 5) * 1000;
 
   readonly context = this.playerContextService.context;
+  readonly metaDisplay = metaDisplay;
 
   readonly state = toSignal(
     toObservable(this.context).pipe(
