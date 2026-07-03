@@ -14,6 +14,7 @@
         size="10"
         [ngModel]="pidInput() ?? ''"
         (ngModelChange)="onPidInput($event)"
+        [readonly]="routePid() !== null"
         autocomplete="off"
         enterkeyhint="go"
         (keydown.enter)="loadEnteredPid()"

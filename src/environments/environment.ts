@@ -4,7 +4,7 @@ const apiBaseUrl = '/gogi-api/api/';
 export const environment = {
   production: false,
   debugLogging: true,
-  version: '26.07.01.01.T',
+  version: '26.07.01.03.T',
   cardRefreshIntervalSeconds: 15,
   apiBaseUrl,
   rapidCmsVerifyAliasApiUrl: `${apiBaseUrl}RapidCMS/login/verify-alias`,

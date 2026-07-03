@@ -7,8 +7,7 @@
   height: 100dvh;
   height: 100vh;
   overflow: hidden;
-  padding: 0;
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding: 0 0 env(safe-area-inset-bottom, 0px);
 }
 
 .slidecardx5-page__content {
@@ -65,78 +64,113 @@
   white-space: nowrap;
 }
 
-.slidecardx5-page__pid-input {
-  width: 6ch;
-  max-width: 6ch;
+.slidecardx5-page__field-label--inning {
+  color: #ff3f92;
+  margin: 0;
+  font-size: 0.58rem;
+  letter-spacing: 0.03em;
+  text-align: center;
+}
+
+.slidecardx5-page__pid-input,
+.slidecardx5-page__load-btn {
   min-height: 2.15rem;
-  padding: 0.35rem 0.4rem;
   border-radius: 0.45rem;
   border: 1px solid var(--border-strong);
   background: transparent;
   color: var(--text-primary);
+}
+
+.slidecardx5-page__pid-input {
+  width: 6ch;
+  max-width: 6ch;
+  padding: 0.35rem 0.4rem;
   font: inherit;
+}
+
+.slidecardx5-page__pid-input:read-only {
+  opacity: 0.85;
+  cursor: default;
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .slidecardx5-page__load-btn {
   flex: 0 0 auto;
-  width: auto;
-  min-height: 2.15rem;
   padding: 0.35rem 0.5rem;
-  border-radius: 0.45rem;
-  border: 1px solid var(--border-strong);
-  background: transparent;
-  color: var(--text-primary);
   cursor: pointer;
   white-space: nowrap;
   font-size: 0.78rem;
 }
 
-.slidecardx5-page__inning-section {
-  flex: 1 1 auto;
+.slidecardx5-page__inning-section,
+.slidecardx5-page__card-nav-section {
   display: grid;
   gap: 0.2rem;
   justify-items: center;
   min-width: 0;
 }
 
+.slidecardx5-page__inning-section {
+  flex: 1 1 auto;
+}
+
+.slidecardx5-page__card-nav-section {
+  flex: 0 0 auto;
+}
+
 .slidecardx5-page__inning-box {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.25rem;
   min-width: 0;
-  padding: 0.12rem 0.22rem;
+  padding: 0.15rem 0.25rem;
   border: 1px solid var(--border-strong);
-  border-radius: 0.45rem;
+  border-radius: 0.4rem;
   background: rgba(9, 14, 24, 0.45);
-}
-
-.slidecardx5-page__field-label--inning {
-  color: #ff3f92;
-  margin: 0;
-  font-size: 0.62rem;
-  letter-spacing: 0.03em;
-  white-space: nowrap;
-  text-align: center;
 }
 
 .slidecardx5-page__inning-buttons {
   display: flex;
   flex-wrap: nowrap;
-  gap: 0.12rem;
+  align-items: center;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.slidecardx5-page__card-nav-box {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.35rem;
   min-width: 0;
 }
 
 .slidecardx5-page__inning-btn {
   flex: 0 0 auto;
-  min-width: 1.55rem;
-  min-height: 2rem;
-  padding: 0.15rem 0.28rem;
-  border-radius: 0.35rem;
+  min-width: 2.5rem;
+  min-height: 2.15rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 0.45rem;
   border: 1px solid transparent;
   background: transparent;
   color: var(--text-primary);
-  cursor: pointer;
   font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.slidecardx5-page__nav-btn {
+  flex: 0 0 auto;
+  min-width: 3rem;
+  min-height: 2.5rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
 }
 
 .slidecardx5-page__inning-btn.is-active {
@@ -146,39 +180,17 @@
   font-weight: 700;
 }
 
-.slidecardx5-page__card-nav-section {
-  flex: 0 0 auto;
-  display: grid;
-  gap: 0.2rem;
-  justify-items: center;
-  min-width: 0;
-}
-
-.slidecardx5-page__card-nav-box {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  min-width: 0;
-}
-
 .slidecardx5-page__nav-btn {
-  min-height: 2.5rem;
-  min-width: 3rem;
-  padding: 0.35rem 0.7rem;
-  border-radius: 0.5rem;
   border: 1px solid #9dff00;
-  background: linear-gradient(180deg, #d4ff00 0%, #39ff14 100%);
+  background: linear-gradient(180deg, #d4ff00, #39ff14);
   box-shadow: 0 0 10px rgba(57, 255, 20, 0.35);
   color: #0a1f08;
-  cursor: pointer;
-  font-size: 0.85rem;
   font-weight: 700;
-  white-space: nowrap;
 }
 
 .slidecardx5-page__nav-btn:not(:disabled):active {
   transform: scale(0.98);
-  background: linear-gradient(180deg, #c8f500 0%, #2ef012 100%);
+  background: linear-gradient(180deg, #c8f500, #2ef012);
 }
 
 .slidecardx5-page__nav-btn:disabled {
@@ -233,7 +245,6 @@
   display: grid;
   justify-items: center;
   align-content: stretch;
-  padding: 0;
 }
 
 .slidecardx5-page__slide app-bingo-card {
@@ -244,85 +255,84 @@
   min-height: 0;
 }
 
-.slidecardx5-page__slide ::ng-deep .slidecardone-card,
-.slidecardx5-page__slide ::ng-deep .slidecardsw-card {
-  width: 100%;
-  max-width: 62rem;
-  height: 100%;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  justify-self: center;
-  gap: 0.4rem;
-  padding: 0.45rem 0.55rem;
-}
+.slidecardx5-page__slide ::ng-deep {
+  .slidecardone-card,
+  .slidecardsw-card {
+    width: 100%;
+    max-width: 62rem;
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0.45rem 0.55rem;
+  }
 
-.slidecardx5-page__slide ::ng-deep .slidecardsw-card__header {
-  flex: 0 0 auto;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.5rem;
-}
+  .slidecardsw-card__header {
+    flex: 0 0 auto;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
 
-.slidecardx5-page__slide ::ng-deep .slidecardsw-sponsor-area {
-  display: none;
-}
+  .slidecardsw-sponsor-area {
+    display: none;
+  }
 
-.slidecardx5-page__slide ::ng-deep .slidecardsw-card__meta {
-  width: 100%;
-}
+  .slidecardsw-card__meta,
+  .slidecardsw-card__id-row {
+    width: 100%;
+    margin: 0;
+  }
 
-.slidecardx5-page__slide ::ng-deep .slidecardsw-card__id-row {
-  margin: 0;
-}
+  .slidecardsw-card__id-pair:nth-child(3) .slidecardsw-card__id-label {
+    color: #ff3f92;
+  }
 
-.slidecardx5-page__slide ::ng-deep .slidecardsw-card__id-pair:nth-child(3) .slidecardsw-card__id-label {
-  color: #ff3f92;
-}
+  .slidecardsw-card__id-label {
+    font-size: 0.72rem;
+  }
 
-.slidecardx5-page__slide ::ng-deep .slidecardsw-card__grid {
-  flex: 1 1 auto;
-  min-height: 0;
-  height: 100%;
-  grid-template-rows: repeat(5, minmax(0, 1fr));
-  gap: clamp(0.25rem, 1.2vw, 0.45rem);
-}
+  .slidecardsw-card__id-value {
+    font-size: 0.88rem;
+  }
 
-.slidecardx5-page__slide ::ng-deep .slidecardsw-square {
-  min-height: 0;
-  height: 100%;
-  padding: clamp(0.25rem, 1vw, 0.45rem);
-  gap: 0.2rem;
-}
+  .slidecardsw-card__grid {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+    grid-template-rows: repeat(5, minmax(0, 1fr));
+    gap: clamp(0.25rem, 1.2vw, 0.45rem);
+  }
 
-.slidecardx5-page__slide ::ng-deep .slidecardsw-card__id-label {
-  font-size: 0.72rem;
-}
+  .slidecardsw-square {
+    min-height: 0;
+    height: 100%;
+    padding: clamp(0.25rem, 1vw, 0.45rem);
+    gap: 0.2rem;
+  }
 
-.slidecardx5-page__slide ::ng-deep .slidecardsw-card__id-value {
-  font-size: 0.88rem;
-}
+  .slidecardsw-square__title {
+    font-size: clamp(0.58rem, 2.5vw, 0.88rem);
+  }
 
-.slidecardx5-page__slide ::ng-deep .slidecardsw-square__title {
-  font-size: clamp(0.58rem, 2.5vw, 0.88rem);
-}
+  .slidecardsw-square__artist {
+    font-size: clamp(0.5rem, 2.15vw, 0.76rem);
+  }
 
-.slidecardx5-page__slide ::ng-deep .slidecardsw-square__artist {
-  font-size: clamp(0.5rem, 2.15vw, 0.76rem);
-}
-
-.slidecardx5-page__slide ::ng-deep .slidecardsw-square__topline {
-  font-size: clamp(0.5rem, 1.85vw, 0.66rem);
+  .slidecardsw-square__topline {
+    font-size: clamp(0.5rem, 1.85vw, 0.66rem);
+  }
 }
 
 .slidecardx5-page__status {
   width: 100%;
   text-align: center;
-}
 
-.slidecardx5-page__status p {
-  margin: 0;
-  color: var(--text-muted);
+  p {
+    margin: 0;
+    color: var(--text-muted);
+  }
 }
 
 .slidecardx5-page__status--error p {
@@ -346,12 +356,12 @@
   padding: 1rem 1.1rem;
   border-radius: 1rem;
   text-align: center;
-}
 
-.slidecardx5-page__popup p {
-  margin: 0;
-  color: var(--text-primary);
-  line-height: 1.45;
+  p {
+    margin: 0;
+    color: var(--text-primary);
+    line-height: 1.45;
+  }
 }
 
 .slidecardx5-page__popup-btn {
@@ -363,11 +373,4 @@
   color: var(--text-primary);
   font-weight: 700;
   cursor: pointer;
-}
-
-@media (max-width: 640px) {
-  .slidecardx5-page__slide ::ng-deep .slidecardsw-card__header {
-    flex-direction: row;
-    align-items: center;
-  }
 }

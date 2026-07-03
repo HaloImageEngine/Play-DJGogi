@@ -40,6 +40,12 @@
   width: 100%;
 }
 
+.slidecard-page__pid-input:read-only {
+  opacity: 0.85;
+  cursor: default;
+  background: rgba(255, 255, 255, 0.04);
+}
+
 .slidecard-page__load-btn {
   min-height: 2.75rem;
   padding: 0.45rem 0.9rem;

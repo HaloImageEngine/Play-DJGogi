@@ -17,6 +17,7 @@
               size="6"
               [ngModel]="pidtx5Input() ?? ''"
               (ngModelChange)="onPidtx5Input($event)"
+              [readonly]="routePidtx5() !== null"
               autocomplete="off"
               enterkeyhint="go"
               (keydown.enter)="loadEnteredPidtx5()"
