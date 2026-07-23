@@ -1,0 +1,81 @@
+.admin-nav-page {
+  width: 100%;
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 0.75rem 0.75rem 1.5rem;
+}
+
+.admin-nav-page__header {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 0.85rem;
+}
+
+.admin-nav-page__eyebrow {
+  margin: 0;
+  color: var(--accent-amber);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.admin-nav-page__title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.admin-nav-page__copy {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.admin-nav-page__grid {
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.85rem;
+}
+
+.admin-nav-page__link {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.65rem;
+  border: 1px solid var(--border-soft);
+  background: rgba(15, 23, 42, 0.35);
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.admin-nav-page__link:hover {
+  border-color: rgba(29, 211, 176, 0.55);
+  background: rgba(29, 211, 176, 0.08);
+}
+
+.admin-nav-page__link-label {
+  font-weight: 700;
+}
+
+.admin-nav-page__link-route {
+  color: var(--accent-teal);
+  font-size: 0.82rem;
+  font-family: ui-monospace, 'Cascadia Code', monospace;
+}
+
+.admin-nav-page__link-note {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+
+.admin-nav-page__denied {
+  padding: 1rem;
+  text-align: center;
+
+  p {
+    margin: 0;
+    color: var(--danger);
+  }
+}

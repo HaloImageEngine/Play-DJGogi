@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { AuthGuard } from './services/auth.guard';
+import { adminGuard } from './services/admin.guard';
 import { slidecardByPidAuthGuard } from './services/slidecard-bypid-auth.guard';
 
 export const routes: Routes = [
@@ -59,9 +60,26 @@ export const routes: Routes = [
     canActivate: [slidecardByPidAuthGuard]
   },
   {
+    path: 'slidecardbypidx3',
+    loadComponent: () =>
+      import('./pages/slidecardbypidx3/slidecardbypidx3.component').then(m => m.SlidecardByPidX3Component),
+    canActivate: [slidecardByPidAuthGuard]
+  },
+  {
+    path: 'slidecardbypidx3/:pidtx3',
+    loadComponent: () =>
+      import('./pages/slidecardbypidx3/slidecardbypidx3.component').then(m => m.SlidecardByPidX3Component),
+    canActivate: [slidecardByPidAuthGuard]
+  },
+  {
     path: 'winnercard',
     loadComponent: () => import('./pages/winnercard/winnercard.component').then(m => m.WinnercardComponent),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'admin',
+    loadComponent: () => import('./pages/admin-nav/admin-nav.component').then(m => m.AdminNavComponent),
+    canActivate: [adminGuard]
   },
   { path: 'card', pathMatch: 'full', redirectTo: 'slidecard' },
   { path: 'card/:cardId', pathMatch: 'full', redirectTo: 'singlecard/:cardId' },

@@ -3,6 +3,7 @@ import { Component, computed, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 import { AuthUserService } from '../../services/auth-user.service';
+import { AdminService } from '../../services/admin.service';
 import { LoginService } from '../../services/login.service';
 
 @Component({
@@ -14,6 +15,7 @@ import { LoginService } from '../../services/login.service';
 })
 export class TopBannerComponent {
   private readonly authUserService = inject(AuthUserService);
+  private readonly adminService = inject(AdminService);
   private readonly loginService = inject(LoginService);
   private readonly router = inject(Router);
 
@@ -24,6 +26,7 @@ export class TopBannerComponent {
     return alias === 'guest100';
   });
   readonly showTopNav = computed(() => !this.isGuest100User());
+  readonly isAdmin = this.adminService.isAdmin;
 
   onAuthAction(): void {
     if (this.isLoggedIn()) {

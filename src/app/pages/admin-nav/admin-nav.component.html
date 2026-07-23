@@ -1,0 +1,30 @@
+<section class="admin-nav-page page-stack">
+  <app-top-banner />
+
+  <header class="admin-nav-page__header">
+    <p class="admin-nav-page__eyebrow">Administration</p>
+    <h1 class="admin-nav-page__title">Admin Navigation</h1>
+    <p class="admin-nav-page__copy">
+      Quick access to all application pages for user {{ user()?.UserAlias ?? '—' }} (UID
+      {{ user()?.UserId ?? '—' }}).
+    </p>
+  </header>
+
+  @if (isAdmin()) {
+    <nav class="surface-card admin-nav-page__grid" aria-label="All application pages">
+      @for (link of links; track link.route) {
+        <a class="admin-nav-page__link" [routerLink]="link.route">
+          <span class="admin-nav-page__link-label">{{ link.label }}</span>
+          <span class="admin-nav-page__link-route">{{ link.route }}</span>
+          @if (link.note) {
+            <span class="admin-nav-page__link-note">{{ link.note }}</span>
+          }
+        </a>
+      }
+    </nav>
+  } @else {
+    <section class="surface-card admin-nav-page__denied">
+      <p>You do not have admin access.</p>
+    </section>
+  }
+</section>

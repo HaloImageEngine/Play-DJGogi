@@ -17,5 +17,6 @@ export const environment = {
   bingoCheckCalledNumberApiUrl: `${apiBaseUrl}Bingo/CallList/Check_Called_Number`,
   bingoLatestGamesByUserApiUrl: `${apiBaseUrl}Bingo/Game/Get_Latest_Games_by_UserID`,
   bingoMaxGameIdApiUrl: `${apiBaseUrl}Bingo/CallList/Get_Max_Game_ID`,
-  packetIdDetailsByPidtx5ApiUrl: `${apiBaseUrl}Packet/Get_PacketID_Details_By_PIDTX5`
+  packetIdDetailsByPidtx5ApiUrl: `${apiBaseUrl}Packet/Get_PacketID_Details_By_PIDTX5`,
+  packetIdDetailsByPidtx3ApiUrl: `${apiBaseUrl}Packet/Get_PacketID_Details_By_PIDTX3`
 };

@@ -91,6 +91,17 @@
   box-shadow: inset 0 0 0 1px rgba(29, 211, 176, 0.35);
 }
 
+.top-nav__button--admin {
+  border-color: rgba(245, 199, 109, 0.55);
+  color: #ffe8b8;
+}
+
+.top-nav__button--admin.is-active {
+  border-color: rgba(245, 199, 109, 0.85);
+  background: rgba(245, 199, 109, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(245, 199, 109, 0.35);
+}
+
 @media (max-width: 640px) {
   .top-banner__title {
     flex: 1 1 100%;

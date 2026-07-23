@@ -4,6 +4,11 @@ import { map, Observable, of } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import {
+  PacketDetailX3,
+  PacketIdDetailsByPidtx3Result,
+  PacketMasterX3
+} from '../models/packet-x3.model';
+import {
   PacketDetailX5,
   PacketIdDetailsByPidtx5Result,
   PacketMasterX5
@@ -12,6 +17,17 @@ import {
 @Injectable({ providedIn: 'root' })
 export class PacketService {
   private readonly http = inject(HttpClient);
+
+  /** `POST …/Get_PacketID_Details_By_PIDTX3` */
+  getPacketIdDetailsByPidtx3(pidtx3: number): Observable<PacketIdDetailsByPidtx3Result> {
+    if (!Number.isInteger(pidtx3) || pidtx3 <= 0) {
+      return of({ Master: null, PacketDetails: [] });
+    }
+
+    return this.http
+      .post<unknown>(environment.packetIdDetailsByPidtx3ApiUrl, { PIDTX3: pidtx3 })
+      .pipe(map(response => this.normalizePacketIdDetailsByPidtx3(response)));
+  }
 
   /** `POST …/Get_PacketID_Details_By_PIDTX5` */
   getPacketIdDetailsByPidtx5(pidtx5: number): Observable<PacketIdDetailsByPidtx5Result> {
@@ -24,6 +40,18 @@ export class PacketService {
       .pipe(map(response => this.normalizePacketIdDetailsByPidtx5(response)));
   }
 
+  private normalizePacketIdDetailsByPidtx3(response: unknown): PacketIdDetailsByPidtx3Result {
+    const record = this.unwrapRecord(response) ?? this.asRecord(response) ?? {};
+    const masterRecord = record['Master'] ?? record['master'];
+
+    return {
+      Master: this.mapPacketMasterX3(masterRecord),
+      PacketDetails: this.unwrapArray(record['PacketDetails'] ?? record['packetDetails'])
+        .map(item => this.mapPacketDetailX3(item))
+        .filter((item): item is PacketDetailX3 => item !== null)
+    };
+  }
+
   private normalizePacketIdDetailsByPidtx5(response: unknown): PacketIdDetailsByPidtx5Result {
     const record = this.unwrapRecord(response) ?? this.asRecord(response) ?? {};
     const masterRecord = record['Master'] ?? record['master'];
@@ -33,6 +61,67 @@ export class PacketService {
       PacketDetails: this.unwrapArray(record['PacketDetails'] ?? record['packetDetails'])
         .map(item => this.mapPacketDetail(item))
         .filter((item): item is PacketDetailX5 => item !== null)
+    };
+  }
+
+  private mapPacketMasterX3(item: unknown): PacketMasterX3 | null {
+    const record = this.asRecord(item);
+    if (!record) {
+      return null;
+    }
+
+    const pidtx3 = this.asNullableNumber(record['PIDTX3'] ?? record['Pidtx3']);
+    const gameId = this.asNullableNumber(record['Game_ID'] ?? record['GameID']);
+    const callListId = this.asNullableNumber(record['Call_List_ID'] ?? record['CallListID']);
+    if (pidtx3 === null || gameId === null || callListId === null) {
+      return null;
+    }
+
+    return {
+      PMX3_ID: this.asNullableNumber(record['PMX3_ID'] ?? record['PMX3Id']) ?? pidtx3,
+      PIDTX3: pidtx3,
+      Game_ID: gameId,
+      Call_List_ID: callListId,
+      Inning: this.asNullableNumber(record['Inning'] ?? record['inning']) ?? 0,
+      User_ID: this.asNullableNumber(record['User_ID'] ?? record['UserID']) ?? 0,
+      GPCode: this.asString(record['GPCode']),
+      GPDescription: this.asString(record['GPDescription']),
+      Comment: this.asString(record['Comment']),
+      Created: this.asString(record['Created']),
+      Updated: this.asNullableString(record['Updated']),
+      CardCount: this.asNullableNumber(record['CardCount']) ?? undefined
+    };
+  }
+
+  private mapPacketDetailX3(item: unknown): PacketDetailX3 | null {
+    const record = this.asRecord(item);
+    if (!record) {
+      return null;
+    }
+
+    const pidtx3 = this.asNullableNumber(record['PIDTX3'] ?? record['Pidtx3']);
+    const cardId = this.asNullableNumber(record['Card_ID'] ?? record['CardID']);
+    const inning = this.asNullableNumber(record['Inning'] ?? record['inning']);
+    const pdx3Id = this.asNullableNumber(record['PDX3_ID'] ?? record['PDX3Id']);
+
+    if (pidtx3 === null || cardId === null || inning === null || pdx3Id === null) {
+      return null;
+    }
+
+    return {
+      PIDTX3: pidtx3,
+      PDX3_ID: pdx3Id,
+      Card_ID: cardId,
+      Inning: inning,
+      Card_PlayerName: this.asNullableString(record['Card_PlayerName']),
+      Card_PlayerEmail: this.asNullableString(record['Card_PlayerEmail']),
+      Card_IsWinner: this.asBoolean(record['Card_IsWinner']),
+      PlayCount: this.asNullableNumber(record['PlayCount']) ?? 0,
+      Card_PrintedAt: this.asNullableString(record['Card_PrintedAt']),
+      Status: this.asString(record['Status']),
+      Detail_Winner: this.asBoolean(record['Detail_Winner']),
+      Detail_Created: this.asString(record['Detail_Created']),
+      Detail_Updated: this.asNullableString(record['Detail_Updated'])
     };
   }
 

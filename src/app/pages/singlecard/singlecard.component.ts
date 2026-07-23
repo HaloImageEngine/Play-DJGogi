@@ -31,6 +31,7 @@ interface SinglecardState {
 })
 export class SinglecardComponent {
   readonly environment = environment;
+  readonly metaDisplay = metaDisplay;
 
   private readonly destroyRef = inject(DestroyRef);
   private readonly route = inject(ActivatedRoute);
@@ -68,7 +69,10 @@ export class SinglecardComponent {
         return timer(0, this.refreshIntervalMs).pipe(
           switchMap(() =>
             this.printedCardsService.getPrintedCardsByCardId(cardId).pipe(
-              map(cards => ({ cards, loading: false, error: null } satisfies SinglecardState)),
+              map(cards => {
+                this.persistPlayerContextFromCard(cards[0]);
+                return { cards, loading: false, error: null } satisfies SinglecardState;
+              }),
               catchError(err => {
                 console.error('Single card load failed', err);
                 return of({
@@ -90,27 +94,25 @@ export class SinglecardComponent {
   readonly displayCardId = computed(() => this.routeCardId() ?? this.cardIdInput() ?? null);
   readonly cardsDisplayedCount = computed(() => (this.currentCard() ? 1 : 0));
   readonly displayGameId = computed(() => {
-    const ctx = this.context();
-    if (ctx?.Game_ID && ctx.Game_ID > 0) {
-      return ctx.Game_ID;
+    const card = this.currentCard();
+    if (card?.GameID && card.GameID > 0) {
+      return card.GameID;
     }
-    return this.currentCard()?.GameID ?? null;
+    return this.context()?.Game_ID ?? null;
   });
   readonly displayCallListId = computed(() => {
-    const ctx = this.context();
-    if (ctx?.Call_List_ID && ctx.Call_List_ID > 0) {
-      return ctx.Call_List_ID;
-    }
     const card = this.currentCard();
-    return card?.CallListID && card.CallListID > 0 ? card.CallListID : null;
+    if (card?.CallListID && card.CallListID > 0) {
+      return card.CallListID;
+    }
+    return this.context()?.Call_List_ID ?? null;
   });
   readonly displayInning = computed(() => {
-    const ctx = this.context();
-    if (ctx?.Inning && ctx.Inning > 0) {
-      return ctx.Inning;
-    }
     const card = this.currentCard();
-    return card?.Inning && card.Inning > 0 ? card.Inning : null;
+    if (card?.Inning && card.Inning > 0) {
+      return card.Inning;
+    }
+    return this.context()?.Inning ?? null;
   });
 
   constructor() {
@@ -214,6 +216,23 @@ export class SinglecardComponent {
 
   dismissSquareCheckMessage(): void {
     this.squareCheckMessage.set(null);
+  }
+
+  private persistPlayerContextFromCard(card: PrintedCard | undefined): void {
+    if (!card) {
+      return;
+    }
+
+    const gameId = card.GameID > 0 ? card.GameID : null;
+    const callListId = card.CallListID && card.CallListID > 0 ? card.CallListID : null;
+    if (gameId === null || callListId === null) {
+      return;
+    }
+
+    const inning =
+      card.Inning && card.Inning > 0 ? card.Inning : (this.playerContextService.getContext()?.Inning ?? 1);
+
+    this.playerContextService.updateGameAndCallList(gameId, callListId, inning);
   }
 
   private formatLoadError(err: unknown, fallback: string): string {

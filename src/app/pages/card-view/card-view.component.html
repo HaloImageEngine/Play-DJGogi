@@ -39,8 +39,8 @@
         </label>
         @if (context(); as ctx) {
           <p class="slidecardsw-page__copy">
-            Game context: Game {{ ctx.Game_ID ?? '—' }}, Call list {{ ctx.Call_List_ID ?? '—' }}, Inning
-            {{ ctx.Inning ?? '—' }}.
+            Game context: Game {{ ctx.Game_ID }}, Call list {{ ctx.Call_List_ID }}, Inning
+            {{ ctx.Inning }}.
           </p>
         }
         <button type="button" class="card-view-page__load-btn" (click)="loadEnteredCard()">Load card</button>

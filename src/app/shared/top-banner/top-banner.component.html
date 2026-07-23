@@ -21,6 +21,9 @@
     <a class="top-nav__button" routerLink="/slidecardbypidx5" routerLinkActive="is-active">
       PIDTX5
     </a>
+    <a class="top-nav__button" routerLink="/slidecardbypidx3" routerLinkActive="is-active">
+      PIDTX3
+    </a>
     <a class="top-nav__button" routerLink="/cards" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">
       Cards
     </a>
@@ -32,5 +35,10 @@
     >
       Winner Card
     </a>
+    @if (isAdmin()) {
+      <a class="top-nav__button top-nav__button--admin" routerLink="/admin" routerLinkActive="is-active">
+        Admin
+      </a>
+    }
   </nav>
 }
